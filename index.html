@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>GW2 BLTC</title>
+    <meta name="description" content="">
+    <meta name="author" content="Yi Jiahe">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <ul class="list-inline">
+        <li><img id="thumbnail" /></li>
+        <li><h1 id="name"></h1></li>
+    </ul>
+   
+    <dl class="row">
+        <dt class="col-sm-2">Type</dt>
+        <dd id="type" class="col-sm-9"></dd>
+
+        <dt class="col-sm-2">Description</dt>
+        <dd id="description" class="col-sm-9"></dd>
+    </dl>
+
+    <table>
+        <tr>
+            <th scope="row">Buy</th>
+            <td id="buy"></td>
+        </tr>
+        <tr>
+            <th scope="row">Sell</th>
+            <td id="sell"></td>
+        </tr>
+            <th scope="row">Spread</th>
+            <td id="spread"></td>
+        <tr>
+            <th scope="row">Supply</th>
+            <td id="supply"></td>
+        </tr>
+        <tr>
+            <th scope="row">Demand</th>
+            <td id="demand"></td>
+        </tr>
+    </table>
+
+    <div class="container">
+        <!-- <div class="row">
+            <div id="chart"></div>
+        </div> -->
+        <div class="row">
+            <div class="col-6">
+                <div id="depth_chart"></div>
+            </div>
+            <div class="col-3">
+
+                <div id="sells" class="table"></div>
+            </div>
+            <div class="col-3">
+                <div id="buys" class="table"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
