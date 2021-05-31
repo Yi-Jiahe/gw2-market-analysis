@@ -1,4 +1,4 @@
-const item_id = 19745;
+const item_id = 144;
 
 function formatPrice(price) {
     if (price < 100) {
@@ -50,8 +50,8 @@ async function plot() {
     for (i=0; i < listings[0].sells.length; i++){
         e = listings[0].sells[i];
         supply += e.quantity;
-        sells_x.push(e.quantity);
-        sells_y.push(e.unit_price);
+        // sells_x.push(e.quantity);
+        // sells_y.push(e.unit_price);
         sells_columns[0].push(e.quantity);
         sells_columns[1].push(e.listings);
         sells_columns[2].push(formatPrice(e.unit_price));
@@ -59,8 +59,8 @@ async function plot() {
     for (i=0; i < listings[0].buys.length; i++){
         e = listings[0].buys[i];
         demand += e.quantity;
-        buys_x.push(e.quantity);
-        buys_y.push(e.unit_price);
+        // buys_x.push(e.quantity);
+        // buys_y.push(e.unit_price);
         buys_columns[0].push(e.quantity);
         buys_columns[1].push(e.listings);
         buys_columns[2].push(formatPrice(e.unit_price));
@@ -73,17 +73,29 @@ async function plot() {
     var cumulative_demand = 0;
     const cutoff_percent = 0.75;
     var price_cutoffs = [0, 0];
+    var last_price = listings[0].sells[0].unit_price;
     for (i=0; i < listings[0].sells.length; i++) {
         e = listings[0].sells[i];
         cumulative_supply += e.quantity;
+        for (price = e.unit_price; price > last_price; price--) {
+            sells_x.push(cumulative_supply);
+            sells_y.push(price);
+        }
+        last_price = e.unit_price;
         if (cumulative_supply / supply >= cutoff_percent) {
             price_cutoffs[1] = e.unit_price;
             break;
         }
     }
+    var last_price = listings[0].buys[0].unit_price;
     for (i=0; i < listings[0].buys.length; i++){
         e = listings[0].buys[i];
         cumulative_demand += e.quantity;
+        for (price = e.unit_price; price < last_price; price++) {
+            buys_x.push(cumulative_demand);
+            buys_y.push(price);
+        }
+        last_price = e.unit_price;
         if (cumulative_demand / demand >= cutoff_percent) {
             price_cutoffs[0] = e.unit_price;
             break;
