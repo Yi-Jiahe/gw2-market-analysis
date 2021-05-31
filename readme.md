@@ -1,4 +1,4 @@
-#GW2 BLTC Market Analysis
+# GW2 BLTC Market Analysis
 
 This tool provides at a glace information about items traded on the BLTC, including
 - Item Info
