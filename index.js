@@ -1,4 +1,8 @@
-const item_id = 144;
+var urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams.toString());
+const item_id = urlParams.has('item_id') ? urlParams.get('item_id') : 24;
+
+console.log(item_id);
 
 function formatPrice(price) {
     if (price < 100) {
@@ -13,7 +17,6 @@ function formatPrice(price) {
 async function retrieveItemDetails() {
     const response = await fetch(`https://api.guildwars2.com/v2/items?id=${item_id}`);
     const details = await response.json();
-    console.log(details.icon);
     document.getElementById('thumbnail').src = details.icon;
     document.getElementById('name').innerText = details.name + details.chat_link;
     document.getElementById('type').innerText = details.type.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
