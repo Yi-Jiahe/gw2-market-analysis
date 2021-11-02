@@ -2,6 +2,7 @@ package com.jiahe.db;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.time.Instant;
 
 import com.jiahe.api.PriceData;
 import com.jiahe.api.Listing;
@@ -21,7 +22,7 @@ public class MysqlCon{
 
         Statement stmt=con.createStatement();
         int result = stmt.executeUpdate("""
-            CREATE TABLE observations_table (
+            CREATE TABLE IF NOT EXISTS observations_table (
                 itemid INT NOT NULL,
                 buy_price INT NOT NULL,
                 sell_price INT NOT NULL,
@@ -51,10 +52,64 @@ public class MysqlCon{
             pstmt.addBatch();
         }
 
+        System.out.println("Inserting " + data.length + " observations");
+
         int[] result = pstmt.executeBatch();
 
         System.out.println(Arrays.toString(result));
 
         con.close();
+    }
+
+    // Returns the 2 latest observations for a given offset in days
+    // Observations are taken from different windows to try and spread them out
+    static PriceData[] getLatest2ObservationsByOffset(int itemid, int offset) throws Exception {
+        Connection con=DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/"+System.getenv("DB_NAME"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+
+        long unixTime = Instant.now().getEpochSecond();
+
+        long secondsPerDay = 86400;
+
+        PriceData[] data = new PriceData[2];
+        int i = 0;
+        for (PriceData d: data) {
+            PreparedStatement pstmt = con.prepareStatement("""
+            SELECT buy_price, sell_price, buy_orders, sell_orders 
+            FROM observations_table 
+            WHERE itemid=? 
+            AND timestamp BETWEEN ? AND ?)
+            ORDER BY timestamp DESC 
+            LIMIT 1""");
+
+            pstmt.setInt(1, itemid);
+            pstmt.setLong(2, (long)(unixTime-secondsPerDay*((i+1)/2)));
+            pstmt.setLong(3, (long)(unixTime-secondsPerDay*((i)/2)));
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                d.id = itemid;
+                d.buys.unit_price = rs.getInt("buy_price");
+                d.sells.unit_price = rs.getInt("sell_price");
+                d.buys.quantity = rs.getInt("buy_orders");
+                d.sells.quantity = rs.getInt("sell_orders");
+            }
+            i++;
+        }
+
+        System.out.println(Arrays.toString(data));
+
+        con.close();
+
+        return data;
+    }
+
+    static void updateRunningAverage() {
+        int[] days = {7, 30};
+        String[][] columns = {
+                {},
+                {}
+        };
     }
 }

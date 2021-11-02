@@ -59,6 +59,8 @@ public class ApiWrapper {
         Gson gson = builder.create();
 
         for (int i = 0; i < itemIds.length; i += maxBatchSize) {
+            System.out.println(i + "/" + itemIds.length + "prices fetched.");
+
             int numIds = (i + 200 < itemIds.length) ? 200 : itemIds.length - i;
 
             String params = "?ids=";
