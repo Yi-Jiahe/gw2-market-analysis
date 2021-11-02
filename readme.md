@@ -16,3 +16,7 @@ This tool provides at a glace information about items traded on the BLTC, includ
 - Listings
     - Graphical representation of 75% of buy and sell quantity
     - Tabular representaion of all listings at their listed unit price
+
+# Version 
+- 0.2 New app entry point and webserver
+- 0.1 Scraper used as app entry point, program to be run periodically by systemd
