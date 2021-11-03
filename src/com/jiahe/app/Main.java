@@ -13,7 +13,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
-        initializeScraperService();
+        switch (args[0]) {
+            case "scrape":
+                Scraper scraper = new Scraper();
+                scraper.run();
+            case "webserver":
+
+        }
     }
 
     private static void initializeScraperService() {
