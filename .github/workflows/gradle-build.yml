@@ -25,3 +25,11 @@ jobs:
 
     - name: Build with Gradle
       run: gradle build
+      
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo ${{ secrets.SERVER_SSH_PRIVATE_KEY }} > ~/.ssh/id_rsa
+        sudo chmod 600 ~/.ssh/id_rsa
+        echo %${{ secrets.SERVER_HOST }} > ~/.ssh/known_hosts
+      
