@@ -2,7 +2,9 @@ package com.jiahe.app;
 
 import com.jiahe.scraper.Scraper;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,21 +13,26 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
+        initializeScraperService();
+    }
+
+    private static void initializeScraperService() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        // TODO: Use UTC +00
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime executionDate = LocalDateTime.of(currentTime.getYear(),
-                currentTime.getMonth(),
+        ZonedDateTime currentTime = Instant.now().atZone(ZoneId.of("UTC"));
+        ZonedDateTime executionTime = ZonedDateTime.of(
+                currentTime.getYear(),
+                currentTime.getMonth().getValue(),
                 currentTime.getDayOfMonth(),
-                12, 0);
+                0, 0, 0, 0, ZoneId.of("UTC")
+        );
 
         long initialDelay;
-        if(currentTime.isAfter(executionDate)){
+        if(currentTime.isAfter(executionTime)){
             // take the next day, if we passed the execution date
-            initialDelay = currentTime.until(executionDate.plusDays(1), ChronoUnit.MILLIS);
+            initialDelay = currentTime.until(executionTime.plusDays(1), ChronoUnit.MILLIS);
         } else {
-            initialDelay = currentTime.until(executionDate, ChronoUnit.MILLIS);
+            initialDelay = currentTime.until(executionTime, ChronoUnit.MILLIS);
         }
 
         long delay = TimeUnit.HOURS.toMillis(6);
