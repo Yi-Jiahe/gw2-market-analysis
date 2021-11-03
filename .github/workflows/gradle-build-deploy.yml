@@ -1,0 +1,35 @@
+name: Gradle Build Deploy
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+    - name: Build with Gradle
+      run: gradle build
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        sudo chmod 600 ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      
+    - name: Transfer artifact
+      run: |
+        mv build/libs/gw2BLTCAnalysis*.jar build/libs/gw2BLTCAnalysis.jar
+        scp build/libs/gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/
+      
