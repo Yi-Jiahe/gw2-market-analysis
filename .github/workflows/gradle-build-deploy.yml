@@ -31,4 +31,4 @@ jobs:
     - name: Transfer artifact
       run: |
         mv build/libs/gw2BLTCAnalysis*.jar build/libs/gw2BLTCAnalysis.jar
-        scp build/libs/gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/gw2-market-analysis/
+        scp build/libs/gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/gw2-market-analysis
