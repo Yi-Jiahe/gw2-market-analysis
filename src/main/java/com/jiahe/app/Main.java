@@ -1,6 +1,8 @@
 package com.jiahe.app;
 
 import com.jiahe.scraper.Scraper;
+import com.jiahe.webserver.Webserver;
+import org.springframework.boot.SpringApplication;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -18,7 +20,7 @@ public class Main {
                 Scraper scraper = new Scraper();
                 scraper.run();
             case "webserver":
-
+                SpringApplication.run(Webserver.class, args);
         }
     }
 

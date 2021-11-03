@@ -7,17 +7,6 @@ import java.util.Arrays;
 import com.google.gson.*;
 
 public class ApiWrapper {
-    public static void main(String[] args) {
-        try {
-            Integer[] itemids = getItemIdList();
-
-            PriceData[] data = getPrices(Arrays.copyOfRange(itemids, 0, 4));
-            System.out.println(Arrays.toString(data));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
     public static Integer[] getItemIdList() throws Exception {
         URL url = new URL("https://api.guildwars2.com/v2/commerce/prices");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
