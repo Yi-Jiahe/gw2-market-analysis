@@ -37,15 +37,7 @@ jobs:
       
     - name: Transfer artifact
       run: |
-        cd ~
-        ls 
-        cd gw2-market-analysis
-        ls 
-        cd build
-        ls 
-        cd libs
-        ls
-        cd ~/gw2-market-analysis/build/libs
+        cd $GITHUB_WORKSPACE/gw2-market-analysis/build/libs
         mv gw2BLTCAnalysis*.jar gw2BLTCAnalysis.jar
         scp gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/
       
