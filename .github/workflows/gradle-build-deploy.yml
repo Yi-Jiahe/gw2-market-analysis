@@ -37,7 +37,6 @@ jobs:
       
     - name: Transfer artifact
       run: |
-        cd $GITHUB_WORKSPACE/build/libs
-        mv gw2BLTCAnalysis*.jar gw2BLTCAnalysis.jar
-        scp gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/
+        mv /build/libs/gw2BLTCAnalysis*.jar /build/libs/gw2BLTCAnalysis.jar
+        scp /build/libs/gw2BLTCAnalysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/
       
