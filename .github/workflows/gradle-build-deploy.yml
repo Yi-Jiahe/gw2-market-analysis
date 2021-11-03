@@ -6,7 +6,7 @@ name: Gradle Build Deploy
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,11 +23,7 @@ jobs:
 
     - name: Build with Gradle
       run: gradle build
-      
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
