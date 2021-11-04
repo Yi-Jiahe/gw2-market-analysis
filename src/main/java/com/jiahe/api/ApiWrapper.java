@@ -31,10 +31,10 @@ public class ApiWrapper {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
-        Integer[] itemids = gson.fromJson(content.toString(), Integer[].class);
+        Integer[] itemIds = gson.fromJson(content.toString(), Integer[].class);
 
-//        System.out.println(Arrays.toString(itemids));
-        return itemids;
+//        System.out.println(Arrays.toString(itemIds));
+        return itemIds;
     }
 
     public static PriceData[] getPrices(Integer[] itemIds) throws Exception {

@@ -8,8 +8,8 @@ public class Scraper implements Runnable {
     @Override
     public void run() {
         try {
-            Integer[] itemids = ApiWrapper.getItemIdList();
-            PriceData[] data = ApiWrapper.getPrices(itemids);
+            Integer[] itemIds = ApiWrapper.getItemIdList();
+            PriceData[] data = ApiWrapper.getPrices(itemIds);
 
             MysqlCon.createObserationTable();
             MysqlCon.addObservation(data);

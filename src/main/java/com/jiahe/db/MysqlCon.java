@@ -15,7 +15,7 @@ public class MysqlCon{
         Statement stmt=con.createStatement();
         int result = stmt.executeUpdate("""
             CREATE TABLE IF NOT EXISTS observations_table (
-                itemid INT NOT NULL,
+                item_id INT NOT NULL,
                 buy_price INT NOT NULL,
                 sell_price INT NOT NULL,
                 buy_orders INT NOT NULL,
@@ -33,7 +33,7 @@ public class MysqlCon{
                 "jdbc:mysql://localhost:3306/"+System.getenv("DB_NAME"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
 
         PreparedStatement pstmt = con.prepareStatement("""
-            INSERT INTO observations_table (itemid, buy_price, sell_price, buy_orders, sell_orders)
+            INSERT INTO observations_table (item_id, buy_price, sell_price, buy_orders, sell_orders)
             VALUES (?, ?, ?, ?, ?)""");
         for (PriceData d : data) {
             pstmt.setInt(1, d.id);
@@ -55,7 +55,7 @@ public class MysqlCon{
 
     // Returns the 2 latest observations for a given offset in days
     // Observations are taken from different windows to try and spread them out
-    static PriceData[] getLatest2ObservationsByOffset(int itemid, int offset) throws Exception {
+    static PriceData[] getLatest2ObservationsByOffset(int itemId, int offset) throws Exception {
         Connection con=DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/"+System.getenv("DB_NAME"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
 
@@ -69,19 +69,19 @@ public class MysqlCon{
             PreparedStatement pstmt = con.prepareStatement("""
             SELECT buy_price, sell_price, buy_orders, sell_orders 
             FROM observations_table 
-            WHERE itemid=? 
+            WHERE item_id=? 
             AND timestamp BETWEEN ? AND ?)
             ORDER BY timestamp DESC 
             LIMIT 1""");
 
-            pstmt.setInt(1, itemid);
+            pstmt.setInt(1, itemId);
             pstmt.setLong(2, (long)(unixTime-secondsPerDay*((i+1)/2)));
             pstmt.setLong(3, (long)(unixTime-secondsPerDay*((i)/2)));
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()){
-                d.id = itemid;
+                d.id = itemId;
                 d.buys.unit_price = rs.getInt("buy_price");
                 d.sells.unit_price = rs.getInt("sell_price");
                 d.buys.quantity = rs.getInt("buy_orders");
