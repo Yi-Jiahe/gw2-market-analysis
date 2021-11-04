@@ -19,8 +19,10 @@ public class Main {
             case "scrape":
                 Scraper scraper = new Scraper();
                 scraper.run();
+                break;
             case "webserver":
                 SpringApplication.run(Webserver.class, args);
+                break;
         }
     }
 
