@@ -1,8 +1,7 @@
-package com.jiahe.api;
+package com.jiahe.app.gw2apiwrapper;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
 
 import com.google.gson.*;
 

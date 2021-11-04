@@ -1,6 +1,6 @@
-package com.jiahe.repositories;
+package com.jiahe.app.repositories;
 
-import com.jiahe.models.Observation;
+import com.jiahe.app.models.Observation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,9 +12,9 @@ import java.util.List;
 public interface ObservationRepository extends JpaRepository<Observation, Long> {
     @Query("""
             SELECT 
-                o
-            FROM observations_table o 
-            WHERE o.item_id=:item_id
+                o 
+            FROM Observation o 
+            WHERE o.itemId = :item_id
             """)
     List<Observation> findByItemId(@Param("item_id") int itemId);
 }

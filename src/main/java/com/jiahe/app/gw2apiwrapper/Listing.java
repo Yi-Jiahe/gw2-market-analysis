@@ -1,4 +1,4 @@
-package com.jiahe.api;
+package com.jiahe.app.gw2apiwrapper;
 
 public class Listing {
     public int quantity;

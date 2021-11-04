@@ -1,11 +1,10 @@
-package com.jiahe.db;
+package com.jiahe.app.db;
 
 import java.sql.*;
 import java.util.Arrays;
 import java.time.Instant;
 
-import com.jiahe.api.PriceData;
-import com.jiahe.api.Listing;
+import com.jiahe.app.gw2apiwrapper.PriceData;
 
 public class MysqlCon{
     public static void createObserationTable() throws Exception {

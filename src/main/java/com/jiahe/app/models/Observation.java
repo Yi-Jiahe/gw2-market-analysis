@@ -1,11 +1,13 @@
-package com.jiahe.models;
+package com.jiahe.app.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="observations_table")
+@Entity
+@Table(name="observations_table")
+@IdClass(ObservationPk.class)
 public class Observation {
+    @Id
     @Column(name="item_id")
     private int itemId;
     @Column(name="buy_price")
@@ -16,6 +18,7 @@ public class Observation {
     private int buyOrders;
     @Column(name="sell_orders")
     private int sellOrders;
+    @Id
     @Column(name="timestamp", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date timestamp;
 
@@ -79,3 +82,4 @@ public class Observation {
         this.timestamp = timestamp;
     }
 }
+

@@ -64,7 +64,9 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script th:inline="javascript">
-        const observations = ${observations};
+    /*<![CDATA[*/
+        const observations = /*[[${observations}]]*/ [];
+    /*]]>*/
     </script>
     <script th:src="@{/js/index.js}"></script>
 </body>

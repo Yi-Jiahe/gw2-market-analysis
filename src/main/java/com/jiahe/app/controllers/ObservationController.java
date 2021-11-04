@@ -1,9 +1,8 @@
-package com.jiahe.webserver;
+package com.jiahe.app.controllers;
 
-import com.jiahe.models.Observation;
-import com.jiahe.services.ObservationsService;
+import com.jiahe.app.models.Observation;
+import com.jiahe.app.services.ObservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +13,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootApplication
 @Controller
-public class Webserver {
+public class ObservationController {
     @Autowired
-    private ObservationsService observationsService;
+    private ObservationService observationService;
 
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -29,12 +27,11 @@ public class Webserver {
     public String serveIndex(
             @RequestParam(value = "item_id", defaultValue = "24") int itemId,
             Model model) {
-//        List<Observation> observations = observationsService.findByItemId(itemId);
-        List<Observation> observations = new ArrayList<Observation>();
-        for (int i=0; i<10; i++) {
-            observations.add(new Observation(i,i*3,i*4,i*20,i*21, Date.from(Instant.now())));
-        }
+
+        List<Observation> observations = observationService.findByItemId(itemId);
+
         model.addAttribute("observations", observations);
+
         return "index";
     }
 }

@@ -1,8 +1,8 @@
-package com.jiahe.scraper;
+package com.jiahe.app.scraper;
 
-import com.jiahe.api.ApiWrapper;
-import com.jiahe.api.PriceData;
-import com.jiahe.db.MysqlCon;
+import com.jiahe.app.gw2apiwrapper.ApiWrapper;
+import com.jiahe.app.gw2apiwrapper.PriceData;
+import com.jiahe.app.db.MysqlCon;
 
 public class Scraper implements Runnable {
     @Override

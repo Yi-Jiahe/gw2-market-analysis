@@ -1,8 +1,9 @@
 package com.jiahe.app;
 
-import com.jiahe.scraper.Scraper;
-import com.jiahe.webserver.Webserver;
+import com.jiahe.app.scraper.Scraper;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -13,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         switch (args[0]) {
@@ -21,7 +23,7 @@ public class Main {
                 scraper.run();
                 break;
             case "webserver":
-                SpringApplication.run(Webserver.class, args);
+                SpringApplication.run(Main.class, args);
                 break;
         }
     }
