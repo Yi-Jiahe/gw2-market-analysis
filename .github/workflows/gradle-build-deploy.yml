@@ -28,7 +28,11 @@ jobs:
         sudo chmod 600 ~/.ssh/id_rsa
         echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
       
-    - name: Transfer artifact
+    - name: Transfer Artifact
       run: |
         mv build/libs/gw2-market-analysis*.jar build/libs/gw2-market-analysis.jar
         scp build/libs/gw2-market-analysis.jar ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }}:~/gw2-market-analysis
+
+    - name: Restart Service
+      run: |
+        ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} "sudo systemctl restart gw2-market-analysis-webserver.service"
