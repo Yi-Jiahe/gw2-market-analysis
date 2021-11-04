@@ -1,5 +1,7 @@
 # GW2 BLTC Market Analysis
 
+![index](assets/index_item_id=86269.png) 
+
 This tool provides at a glace information about items traded on the BLTC, including
 - Item Info
     - Icon

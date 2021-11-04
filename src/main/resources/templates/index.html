@@ -12,39 +12,42 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
-    <h1><img id="thumbnail" /><span id="name"></span> <input id="chat_link" readonly></h1>
-
-    <dl class="row">
-        <dt class="col-sm-2">Type</dt>
-        <dd id="type" class="col-sm-9"></dd>
-
-        <dt class="col-sm-2">Description</dt>
-        <dd id="description" class="col-sm-9"></dd>
-    </dl>
-    <table>
-        <tr>
-            <th scope="row">Buy</th>
-            <td id="buy"></td>
-        </tr>
-        <tr>
-            <th scope="row">Sell</th>
-            <td id="sell"></td>
-        </tr>
-            <th scope="row">Spread</th>
-            <td id="spread"></td>
-        <tr>
-            <th scope="row">Supply</th>
-            <td id="supply"></td>
-        </tr>
-        <tr>
-            <th scope="row">Demand</th>
-            <td id="demand"></td>
-        </tr>
-    </table>
     <div class="container">
-        <!-- <div class="row">
-            <div id="chart"></div>
-        </div> -->
+        <div class="row">
+            <div class="col">
+                <div>
+                    <h1><img id="thumbnail" /><span id="name"></span> <input id="chat_link" readonly></h1>
+
+                    <dl class="row">
+                        <dt class="col-sm-2">Type</dt>
+                        <dd id="type" class="col-sm-9"></dd>
+
+                        <dt class="col-sm-2">Description</dt>
+                        <dd id="description" class="col-sm-9"></dd>
+                    </dl>
+                    <table>
+                        <tr>
+                            <th scope="row">Buy</th>
+                            <td id="buy"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Sell</th>
+                            <td id="sell"></td>
+                        </tr>
+                        <th scope="row">Spread</th>
+                        <td id="spread"></td>
+                        <tr>
+                            <th scope="row">Supply</th>
+                            <td id="supply"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Demand</th>
+                            <td id="demand"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-6">
                 <div id="depth_chart"></div>
