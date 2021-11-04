@@ -1,8 +1,12 @@
 var urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams.toString());
 const item_id = urlParams.has('item_id') ? urlParams.get('item_id') : 24;
 
-console.log(item_id);
+document.getElementById('chat_link').onclick = function() {
+      this.select();
+      this.setSelectionRange(0, 99999); /* For mobile devices */
+
+      navigator.clipboard.writeText(this.value);
+};
 
 function formatPrice(price) {
     if (price < 100) {
@@ -18,16 +22,12 @@ async function retrieveItemDetails() {
     const response = await fetch(`https://api.guildwars2.com/v2/items?id=${item_id}`);
     const details = await response.json();
     document.getElementById('thumbnail').src = details.icon;
-    document.getElementById('name').innerText = details.name + details.chat_link;
+    document.getElementById('name').innerText = details.name;
+    document.getElementById('chat_link').value = details.chat_link;
+    document.getElementById('chat_link').setAttribute("size", document.getElementById('chat_link').value.length);
     document.getElementById('type').innerText = details.type.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
     document.getElementById('description').innerText = details.description;
 }
-
-// TESTER = document.getElementById('chart');
-// Plotly.newPlot( TESTER, [{
-// x: [1, 2, 3, 4, 5],
-// y: [1, 2, 4, 8, 16] }], {
-// margin: { l:20, r:0, t: 0, b: 20 } } );
 
 async function plot() {
     const response = await fetch(`https://api.guildwars2.com/v2/commerce/listings?ids=${item_id}`);
@@ -126,6 +126,7 @@ async function plot() {
         },
     }];
     var layout = {
+        title: 'Depth Chart',
         barmode: "overlay",
         bargap: 0,
         yaxis: {
@@ -135,7 +136,7 @@ async function plot() {
         margin: {
             l: 50,
             r: 0,
-            t: 10,
+            t: 40,
             b: 20
         }
     };
@@ -153,10 +154,11 @@ async function plot() {
             }
         }],
         {
+            title: 'Sells',
             margin: {
                 l: 0,
                 r: 20,
-                t: 0,
+                t: 40,
                 b: 20
             }
         }
@@ -173,15 +175,89 @@ async function plot() {
             }
         }],
         {
+            title: 'Buys',
             margin: {
                 l: 0,
                 r: 20,
-                t: 0,
+                t: 40,
                 b: 20
             }
         }
     );
 }
 
+function plotTimeSeriesData() {
+    const priceTimeSeriesPlot = document.getElementById("price_time_series");
+    const ordersTimeSeriesPlot = document.getElementById("orders_time_series");
+    const n = observations.length;
+    var buyPrice = new Array(n);
+    var sellPrice = new Array(n);
+    var buyOrders = new Array(n);
+    var sellOrders = new Array(n);
+    var timestamps = new Array(n);
+
+    for (var i=0; i<n; i++) {
+        const observation = observations[i];
+
+        buyPrice[i] = observation.buyPrice;
+        sellPrice[i] = observation.sellPrice;
+        buyOrders[i] = observation.buyOrders;
+        sellOrders[i] = observation.sellOrders;
+        timestamps[i] = observation.timestamp;
+    }
+
+    const priceData = [
+        {
+            x: timestamps,
+            y: buyPrice,
+            type: 'scatter',
+            name: 'Buy Price',
+            line: {
+                color: 'green'
+            }
+        },
+        {
+            x: timestamps,
+            y: sellPrice,
+            type: 'scatter',
+            name: 'Sell Price',
+            line: {
+                color: 'red'
+            }
+        }
+    ];
+    const ordersData = [
+        {
+            x: timestamps,
+            y: buyOrders,
+            type: 'scatter',
+            name: 'Buy Orders',
+            line: {
+                color: 'green'
+            }
+        },
+        {
+            x: timestamps,
+            y: sellOrders,
+            type: 'scatter',
+            name: 'Sell Orders',
+            line: {
+                color: 'red'
+            }
+        },
+    ];
+
+    const priceTimeSeriesPlotLayout = {
+        title: 'Price'
+    };
+    const ordersTimeSeriesPlotLayout = {
+        title: 'Order Quantity'
+    };
+
+    Plotly.newPlot(priceTimeSeriesPlot, priceData, priceTimeSeriesPlotLayout);
+    Plotly.newPlot(ordersTimeSeriesPlot, ordersData, ordersTimeSeriesPlotLayout);
+}
+
 retrieveItemDetails();
 plot();
+plotTimeSeriesData();

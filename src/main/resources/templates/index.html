@@ -12,11 +12,8 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
-    <ul class="list-inline">
-        <li><img id="thumbnail" /></li>
-        <li><h1 id="name"></h1></li>
-    </ul>
-   
+    <h1><img id="thumbnail" /><span id="name"></span> <input id="chat_link" readonly></h1>
+
     <dl class="row">
         <dt class="col-sm-2">Type</dt>
         <dd id="type" class="col-sm-9"></dd>
@@ -53,11 +50,20 @@
                 <div id="depth_chart"></div>
             </div>
             <div class="col-3">
-
                 <div id="sells" class="table"></div>
             </div>
             <div class="col-3">
                 <div id="buys" class="table"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="price_time_series"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="orders_time_series"></div>
             </div>
         </div>
     </div>
