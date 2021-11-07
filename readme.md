@@ -2,7 +2,7 @@
 
 ![index](assets/index_item_id=86269.png) 
 
-This [tool](bltc.jiahe.dev) provides at a glace information about items traded on the BLTC, including
+This [tool](bltc.jiahe.dev/?item_id=86269) provides at a glace information about items traded on the BLTC, including
 - Item Info
     - Icon
     - Name
