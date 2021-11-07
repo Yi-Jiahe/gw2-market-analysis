@@ -23,7 +23,7 @@ public class ObservationController {
         return String.format("Hello %s!", name);
     }
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String serveIndex(
             @RequestParam(value = "item_id", defaultValue = "24") int itemId,
             Model model) {
